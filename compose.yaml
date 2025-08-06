@@ -1,0 +1,25 @@
+services:
+  kakua-jupyter-lab:
+    image: quay.io/jupyter/base-notebook
+    volumes:
+      - ./research:/research
+    ports:
+      - 8445:8445
+    command: start-notebook.py --port 8445 --notebook-dir="/research" --NotebookApp.token=$NOTEBOOK_TOKEN
+  kakua-code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    build:
+        context: "./"
+    container_name: code-server
+    environment:
+      - PUID=$(id -u)
+      - PGID=$(id -g)
+      - PASSWORD=$NOTEBOOK_PASSWD
+      - DEFAULT_WORKSPACE=/research
+      - PWA_APPNAME=kakua-code-server
+    volumes:
+      - ./config:/config
+      - ./research:/research
+    ports:
+      - 8443:8443
+    restart: unless-stopped
