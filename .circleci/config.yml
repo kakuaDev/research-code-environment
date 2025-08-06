@@ -1,0 +1,25 @@
+version: 2.1
+
+jobs:
+  build-and-deploy:
+    steps:
+      - checkout
+      - run:
+          name: Install SSH client
+          command: sudo apt-get update && sudo apt-get install -y openssh-client
+      - run:
+          name: Add server to known_hosts
+          command: ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
+      - add_ssh_keys:
+          fingerprints:
+            - "$FINGERPRINT"
+      - run:
+          name: Build and Deploy Docker image on remote server
+          command: |
+            ssh $SSH_USER@$SSH_HOST "
+            cd $APP_PATH && git pull origin main &&
+            docker compose up -d --build"
+workflows:
+  build-and-deploy:
+    jobs:
+      - build-and-deploy:
