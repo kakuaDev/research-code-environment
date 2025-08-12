@@ -24,7 +24,7 @@ jobs:
             echo 'PGID=$(id -g)' >> .env_file &&
             docker compose down --remove-orphans &&
             docker compose build &&
-            docker compose up -d --env-file .env_file"
+            docker compose up -d"
 workflows:
   build-and-deploy:
     jobs:
