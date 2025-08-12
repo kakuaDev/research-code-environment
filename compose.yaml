@@ -6,7 +6,7 @@ services:
     ports:
       - 8445:8445
     env_file:
-      - fileName: .env_file
+      - fileName: ./.env_file
     command: start-notebook.py --port 8445 --notebook-dir="/research" --NotebookApp.token=$NOTEBOOK_TOKEN
   kakua-code-server:
     image: lscr.io/linuxserver/code-server:latest
@@ -14,7 +14,7 @@ services:
         context: "./"
     container_name: code-server
     env_file:
-      - fileName: .env_file
+      - fileName: ./.env_file
     environment:
       - PUID=$PUID
       - PGID=$PGID
