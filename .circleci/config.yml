@@ -17,11 +17,11 @@ jobs:
           command: |
             ssh $SSH_USER@$SSH_HOST "
             cd $APP_PATH && git pull origin main &&
-            touch .env_file &&
-            echo 'NOTEBOOK_TOKEN=$NOTEBOOK_TOKEN' > .env_file &&
-            echo 'NOTEBOOK_PASSWD=$NOTEBOOK_PASSWD' >> .env_file &&
-            echo 'PUID=$(id -u)' >> .env_file &&
-            echo 'PGID=$(id -g)' >> .env_file &&
+            touch .env &&
+            echo 'NOTEBOOK_TOKEN=$NOTEBOOK_TOKEN' > .env &&
+            echo 'NOTEBOOK_PASSWD=$NOTEBOOK_PASSWD' >> .env &&
+            echo 'PUID=$(id -u)' >> .env &&
+            echo 'PGID=$(id -g)' >> .env &&
             docker compose down --remove-orphans &&
             docker compose build &&
             docker compose up -d"
