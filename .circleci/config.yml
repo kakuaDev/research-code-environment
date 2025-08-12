@@ -17,9 +17,12 @@ jobs:
           command: |
             ssh $SSH_USER@$SSH_HOST "
             cd $APP_PATH && git pull origin main &&
+            touch .env_file &&
+            echo 'NOTEBOOK_TOKEN=$NOTEBOOK_TOKEN' >> .env_file &&
+            echo 'NOTEBOOK_PASSWD=$NOTEBOOK_PASSWD' >> .env_file &&
             docker compose down --remove-orphans &&
             docker compose build &&
-            docker compose up -d"
+            docker compose up -d --env-file .env_file"
 workflows:
   build-and-deploy:
     jobs:
