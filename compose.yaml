@@ -1,8 +1,6 @@
 services:
   kakua-jupyter-lab:
     image: quay.io/jupyter/base-notebook
-    environment:
-      - NOTEBOOK_TOKEN=${NOTEBOOK_TOKEN}
     volumes:
       - ./research:/research
     ports:
@@ -16,7 +14,7 @@ services:
     environment:
       - PUID=$(id -u)
       - PGID=$(id -g)
-      - PASSWORD=${NOTEBOOK_PASSWD}
+      - PASSWORD=$NOTEBOOK_PASSWD
       - DEFAULT_WORKSPACE=/research
       - PWA_APPNAME=kakua-code-server
     volumes:
